@@ -1,0 +1,28 @@
+version: '3'
+services:
+  db:
+    image: 'postgres'
+    container_name: db_node
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: info
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  server.infotech:
+    image: node:alpine
+    stdin_open: true
+    container_name: server-infotech
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 3333:3333
+    volumes:
+      - ./:/server.infotech
+      - /server.infotech/node_modules
+    restart: always
+    links:
+      - db

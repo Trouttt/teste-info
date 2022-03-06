@@ -1,0 +1,16 @@
+{
+  "type": "postgres",
+  "host": "db_node",
+  "port": 5432,
+  "username": "postgres",
+  "password": "postgres",
+  "database": "info",
+  "entities": [ "./src/modules/**/infra/typeorm/entities/*.ts"
+  ],
+  "migrations": [
+    "./src/shared/infra/typeorm/migrations/*.ts"
+  ],
+  "cli": {
+    "migrationsDir": "./src/shared/infra/typeorm/migrations"
+  }
+}
