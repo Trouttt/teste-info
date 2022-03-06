@@ -12,7 +12,7 @@ class CreateVehicleService {
     model,
     plate,
     renavan,
-    chassi,
+    chassi = '',
   }: ICreateVehicleDTO): Promise<IVehicle | AppError> {
     try {
       if (plate.length < 7 || plate.length > 8) {
@@ -21,6 +21,10 @@ class CreateVehicleService {
           400,
         );
       }
+      if (chassi?.length > 0 && chassi?.length !== 17) {
+        throw new AppError('Campo "chassi" deve ter 17 caractéres!!!', 400);
+      }
+
       const vehicle = {
         model,
         maker,
@@ -53,9 +57,28 @@ describe('Vehicle Register Service', () => {
       chassi: '9BRBLWHEXGO107721',
     };
     const httpResponse = await sut.execute(httpRequest);
+
+
     assert.deepEqual(
       httpResponse,
       new AppError('Campo "placa" deve ter no mínimo 7 e no máximo 8 caractéres!!!', 400),
+    );
+  });
+  it('Should return error if the chassi is more than 0 and different than 17', async () => {
+    const sut = makeSut();
+    const httpRequest = {
+      modelYear: '2021',
+      maker: 'Chevete',
+      model: 'aro 90',
+      plate: 'AJJ1314',
+      renavan: '12345678910',
+      chassi: '123',
+    };
+    const httpResponse = await sut.execute(httpRequest);
+
+    assert.deepEqual(
+      httpResponse,
+      new AppError('Campo "chassi" deve ter 17 caractéres!!!', 400),
     );
   });
 });
