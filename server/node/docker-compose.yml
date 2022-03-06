@@ -11,18 +11,18 @@ services:
       - ./pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-  server.infotech:
+  server.info:
     image: node:alpine
     stdin_open: true
-    container_name: server-infotech
+    container_name: server-info
     build:
       context: ./
       dockerfile: Dockerfile
     ports:
       - 3333:3333
     volumes:
-      - ./:/server.infotech
-      - /server.infotech/node_modules
+      - ./:/server.info
+      - /server.info/node_modules
     restart: always
     links:
       - db

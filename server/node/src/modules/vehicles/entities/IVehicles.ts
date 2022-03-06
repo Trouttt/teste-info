@@ -1,9 +1,9 @@
 export default interface IVehicle {
   id: string;
-  modelYear?: string;
-  maker?: string;
-  model?: string;
+  modelYear: string;
+  maker: string;
+  model: string;
   plate: string;
-  renavan?: string;
+  renavan: string;
   chassi?: string;
 }

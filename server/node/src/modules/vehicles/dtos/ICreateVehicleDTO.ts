@@ -1,8 +1,8 @@
 export default interface ICreateVehicleDTO {
-  modelYear?: string;
-  maker?: string;
-  model?: string;
+  modelYear: string;
+  maker: string;
+  model: string;
   plate: string;
-  renavan?: string;
+  renavan: string;
   chassi?: string;
 }

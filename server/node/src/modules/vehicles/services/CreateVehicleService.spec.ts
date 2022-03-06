@@ -47,7 +47,7 @@ class CreateVehicleService {
         id: 'fkopsafkopas',
       };
       return vehicle;
-    } catch (err) {
+    } catch (err: any) {
       return err;
     }
   }

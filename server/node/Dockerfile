@@ -1,7 +1,7 @@
 FROM node:16-alpine
-RUN mkdir /server.infotech/
-WORKDIR /server.infotech/
-COPY package.json /server.infotech/
+RUN mkdir /server.info/
+WORKDIR /server.info/
+COPY package.json /server.info/
 RUN yarn
-COPY . /server.infotech/
+COPY . /server.info/
 CMD ["yarn", "dev"]
