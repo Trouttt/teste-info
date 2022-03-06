@@ -18,6 +18,9 @@ class CreateVehicleService {
       if (modelYear.length !== 4) {
         throw new AppError('Campo "ano do modelo" deve ter 4 caractéres!!!', 400);
       }
+      if (maker.length < 1) {
+        throw new AppError('Campo "fabricante" deve ter pelo menos 1 caractér!!!', 400);
+      }
       if (model.length < 1) {
         throw new AppError('Campo "modelo" deve ter pelo menos 1 caractér!!!', 400);
       }
@@ -71,6 +74,24 @@ describe('Vehicle Register Service', () => {
     assert.deepEqual(
       httpResponse,
       new AppError('Campo "ano do modelo" deve ter 4 caractéres!!!', 400),
+    );
+  });
+
+  it('Should return error if the maker is less than 1 characteres', async () => {
+    const sut = makeSut();
+    const httpRequest = {
+      modelYear: '2025',
+      maker: '',
+      model: '',
+      plate: 'AJJ1314',
+      renavan: '12345678910',
+      chassi: '',
+    };
+    const httpResponse = await sut.execute(httpRequest);
+
+    assert.deepEqual(
+      httpResponse,
+      new AppError('Campo "fabricante" deve ter pelo menos 1 caractér!!!', 400),
     );
   });
   it('Should return error if the model is less than 1 characteres', async () => {
