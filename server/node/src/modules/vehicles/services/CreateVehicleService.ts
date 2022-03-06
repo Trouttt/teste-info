@@ -2,9 +2,8 @@ import 'reflect-metadata';
 import { getRepository } from 'typeorm';
 import AppError from '../../../shared/error/AppError';
 import ICreateVehicleDTO from '../dtos/ICreateVehicleDTO';
-import IVehicle from '../entities/IVehicles';
-
-class CreateVehicleService {
+import Vehicle from '../infra/typeorm/entities/Vehicle';
+class CreateVehicleService{
   public async execute({
     modelYear,
     maker,
@@ -12,8 +11,21 @@ class CreateVehicleService {
     plate,
     renavan,
     chassi = '',
-  }: ICreateVehicleDTO): Promise<IVehicle | AppError> {
+  }: ICreateVehicleDTO): Promise<Vehicle | AppError> {
     try {
+      const vehiclesRepository = await getRepository(Vehicle);
+
+      const checkVehicleExists = await vehiclesRepository.findOne({
+        where: {plate}
+      })
+
+      if (checkVehicleExists) {
+        throw new AppError(
+          'O carro já está cadastrado!!!',
+          400,
+        );
+      }
+
       if (modelYear.length !== 4) {
         throw new AppError(
           'Campo "ano do modelo" deve ter 4 caractéres!!!',
@@ -45,17 +57,16 @@ class CreateVehicleService {
         throw new AppError('Campo "chassi" deve ter 17 caractéres!!!', 400);
       }
 
-      const vehicle = {
-        model,
-        maker,
-        plate,
+      const vehicle = await vehiclesRepository.create({
         modelYear,
-        renavan,
-        chassi,
-        id: 'fkopsafkopas',
-      };
+    maker,
+    model,
+    plate,
+    renavan,
+    chassi
+      })
       return vehicle;
-    } catch (err) {
+    } catch (err: any) {
       return err;
     }
   }

@@ -8,15 +8,18 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
+    "test": "mocha -r ts-node/register src/modules/**/services/**.spec.ts"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "pg": "^8.7.3",
     "typeorm": "^0.2.45",
     "uuidv4": "^6.2.12"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/mocha": "^9.1.0",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
