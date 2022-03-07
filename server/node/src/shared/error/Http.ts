@@ -3,7 +3,9 @@ class Http {
     if (object.statusCode) {
       return object.statusCode;
     }
-    return 200;
+    else {
+      return 200;
+    }
   };
 }
 export default Http;
