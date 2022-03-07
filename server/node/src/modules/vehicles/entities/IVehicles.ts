@@ -5,5 +5,6 @@ export default interface IVehicle {
   model: string;
   plate: string;
   renavan: string;
-  chassi?: string;
+  chassi: string;
+  statusCode?: number;
 }

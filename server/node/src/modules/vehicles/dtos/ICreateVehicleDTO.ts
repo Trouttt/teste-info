@@ -4,5 +4,6 @@ export default interface ICreateVehicleDTO {
   model: string;
   plate: string;
   renavan: string;
-  chassi?: string;
+  chassi: string;
+
 }

@@ -28,7 +28,9 @@ class Vehicle implements IVehicle{
     updated_at!: Date;
 
     @Column()
-    chassi?: string;
+    chassi!: string;
+
+    statusCode!: number;
 
 }
 export default Vehicle;

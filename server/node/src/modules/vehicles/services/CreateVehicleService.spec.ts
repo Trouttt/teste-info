@@ -1,73 +1,93 @@
 /* eslint-disable prettier/prettier */
 import assert from 'assert';
-import { createConnections, getConnection } from 'typeorm';
+import { createConnections, getConnection, getCustomRepository } from 'typeorm';
 import AppError from '../../../shared/error/AppError';
-import ICreateVehicleDTO from '../dtos/ICreateVehicleDTO';
-import IVehicle from '../entities/IVehicles';
 import CreateVehicleService from './CreateVehicleService';
-// class CreateVehicleService {
-//   public async execute({
-//     modelYear,
-//     maker,
-//     model,
-//     plate,
-//     renavan,
-//     chassi = '',
-//   }: ICreateVehicleDTO): Promise<IVehicle | AppError> {
-//     try {
-//       if (modelYear.length !== 4) {
-//         throw new AppError('Campo "ano do modelo" deve ter 4 caractéres!!!', 400);
-//       }
-//       if (maker.length < 1) {
-//         throw new AppError('Campo "fabricante" deve ter pelo menos 1 caractér!!!', 400);
-//       }
-//       if (model.length < 1) {
-//         throw new AppError('Campo "modelo" deve ter pelo menos 1 caractér!!!', 400);
-//       }
-//       if (plate.length < 7 || plate.length > 8) {
-//         throw new AppError(
-//           'Campo "placa" deve ter no mínimo 7 e no máximo 8 caractéres!!!',
-//           400,
-//         );
-//       }
-//       if (renavan.length !== 11) {
-//         throw new AppError('Campo "renavam" deve ter 11 caractéres!!!', 400);
-//       }
-//       if (chassi?.length > 0 && chassi?.length !== 17) {
-//         throw new AppError('Campo "chassi" deve ter 17 caractéres!!!', 400);
-//       }
 
-//       const vehicle = {
-//         model,
-//         maker,
-//         plate,
-//         modelYear,
-//         renavan,
-//         chassi,
-//         id: 'fkopsafkopas',
-//       };
-//       return vehicle;
-//     } catch (err: any) {
-//       return err;
-//     }
-//   }
-// }
 
+
+before(async () => {
+  await createConnections();
+});
+
+after(async () => {
+  const defaultConnection = getConnection('default');
+  await defaultConnection.close();
+});
 const makeSut = () => {
   return new CreateVehicleService();
 };
 
 describe('Vehicle Register Service', () => {
+  it('Should return error if the plate is already registered', async () => {
+    const sut = makeSut();
+    const httpRequest = {
+      modelYear: '2025',
+      maker: 'teste',
+      model: 'aro 90',
+      plate: '1234567',
+      chassi: '12345678910123456',
+      renavan: '12345678910',
+
+    };
+
+
+    const httpResponse = await sut.execute(httpRequest);
+
+    assert.deepEqual(
+      httpResponse,
+      new AppError('O carro já está cadastrado!!!', 400),
+    );
+  });
+  it('Should return error if the chassi is already registered', async () => {
+    const sut = makeSut();
+    const httpRequest = {
+      modelYear: '2025',
+      maker: 'teste',
+      model: 'aro 90',
+      plate: '111117',
+      chassi: '12345678910123456',
+      renavan: '19235511132',
+
+    };
+
+
+    const httpResponse = await sut.execute(httpRequest);
+
+    assert.deepEqual(
+      httpResponse,
+      new AppError('O chassi já está cadastrado!!!', 400),
+    );
+  });
+  it('Should return error if the renavan is already registered', async () => {
+    const sut = makeSut();
+    const httpRequest = {
+      modelYear: '2025',
+      maker: 'teste',
+      model: 'aro 90',
+      plate: '2171115',
+      chassi: '33355674419234562',
+      renavan: '19235511132',
+    };
+
+
+    const httpResponse = await sut.execute(httpRequest);
+
+    assert.deepEqual(
+      httpResponse,
+      new AppError('O renavan já está cadastrado!!!', 400),
+    );
+  });
 
   it('Should return error if the modelYear is different than 4 characteres', async () => {
     const sut = makeSut();
     const httpRequest = {
       modelYear: '20255',
-      maker: 'Chevete',
+      maker: 'teste',
       model: 'aro 90',
-      plate: 'AJJ1314',
-      renavan: '12345678910',
-      chassi: '',
+      plate: 'abcdefg',
+      renavan: '14455566678',
+      chassi: '17777678910123456',
     };
     const httpResponse = await sut.execute(httpRequest);
 
@@ -84,8 +104,8 @@ describe('Vehicle Register Service', () => {
       maker: '',
       model: '',
       plate: 'AJJ1314',
-      renavan: '12345678910',
-      chassi: '',
+      renavan: '12345618910',
+      chassi: '12345678910123886',
     };
     const httpResponse = await sut.execute(httpRequest);
 
@@ -98,11 +118,11 @@ describe('Vehicle Register Service', () => {
     const sut = makeSut();
     const httpRequest = {
       modelYear: '2025',
-      maker: 'Chevete',
+      maker: 'teste',
       model: '',
       plate: 'AJJ1314',
-      renavan: '12345678910',
-      chassi: '',
+      renavan: '12115678910',
+      chassi: '12555678910123456',
     };
     const httpResponse = await sut.execute(httpRequest);
 
@@ -117,11 +137,11 @@ describe('Vehicle Register Service', () => {
     const sut = makeSut();
     const httpRequest = {
       modelYear: '2021',
-      maker: 'Chevete',
+      maker: 'teste',
       model: 'aro 90',
       plate: '412',
-      renavan: '12345678910',
-      chassi: '9BRBLWHEXGO107721',
+      renavan: '16645678910',
+      chassi: '12315678910123456',
     };
     const httpResponse = await sut.execute(httpRequest);
 
@@ -136,11 +156,11 @@ describe('Vehicle Register Service', () => {
     const sut = makeSut();
     const httpRequest = {
       modelYear: '2025',
-      maker: 'Chevete',
+      maker: 'teste',
       model: 'aro 90',
       plate: 'AJJ1314',
       renavan: '12345678',
-      chassi: '',
+      chassi: '12345671910123456',
     };
     const httpResponse = await sut.execute(httpRequest);
 
@@ -149,14 +169,14 @@ describe('Vehicle Register Service', () => {
       new AppError('Campo "renavam" deve ter 11 caractéres!!!', 400),
     );
   });
-  it('Should return error if the chassi is more than 0 and different than 17', async () => {
+  it('Should return error if the chassi is different than 17', async () => {
     const sut = makeSut();
     const httpRequest = {
       modelYear: '2021',
-      maker: 'Chevete',
+      maker: 'teste',
       model: 'aro 90',
       plate: 'AJJ1314',
-      renavan: '12345678910',
+      renavan: '12345678901',
       chassi: '123',
     };
     const httpResponse = await sut.execute(httpRequest);
