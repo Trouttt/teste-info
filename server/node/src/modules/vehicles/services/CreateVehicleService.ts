@@ -59,11 +59,11 @@ class CreateVehicleService{
 
       const vehicle = await vehiclesRepository.create({
         modelYear,
-    maker,
-    model,
-    plate,
-    renavan,
-    chassi
+        maker,
+        model,
+        plate,
+        renavan,
+        chassi
       })
       return vehicle;
     } catch (err: any) {
