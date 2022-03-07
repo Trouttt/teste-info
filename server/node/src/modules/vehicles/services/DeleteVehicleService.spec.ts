@@ -10,13 +10,13 @@ const makeSut = () => {
 
 describe('vehicle delete service', () => {
 
-  it('Should return 400 and message if no id is provided', async () => {
+  it('Should return 400 and message if no uuid is provided or invalid', async () => {
 
     const sut = makeSut();
 
     const httpRequest = {
 
-      id: '',
+      id: '3123',
 
     };
 

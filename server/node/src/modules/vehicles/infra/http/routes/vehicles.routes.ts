@@ -6,5 +6,5 @@ const vehiclesController = new VehiclesController();
 
 vehiclesRouter.get('/', vehiclesController.getAll);
 vehiclesRouter.post('/', vehiclesController.create);
-vehiclesRouter.delete('/:id', vehiclesRouter)
+vehiclesRouter.delete('/:id', vehiclesController.delete);
 export default vehiclesRouter;

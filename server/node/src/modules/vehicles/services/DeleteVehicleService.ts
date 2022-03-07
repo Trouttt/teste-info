@@ -6,6 +6,7 @@ import AppError from '../../../shared/error/AppError';
 
 import Vehicle from '../infra/typeorm/entities/Vehicle';
 
+import validate from 'uuid-validate';
 interface IRequest {
 
   id: string;
@@ -20,7 +21,9 @@ class DeleteVehicleService {
 
       const vehiclesRepository = await getRepository(Vehicle);
 
-      if (!id || id.length === 0) {
+      const validateUuid = validate(id)
+
+      if (!validateUuid) {
 
         throw new AppError('Id inválido!!!', 400);
 
@@ -31,6 +34,7 @@ class DeleteVehicleService {
         where: { id },
 
       });
+
 
       if (!vehicle) {
 
@@ -43,9 +47,7 @@ class DeleteVehicleService {
       return vehicle;
 
     } catch (err: any) {
-
       return err;
-
     }
 
   }
