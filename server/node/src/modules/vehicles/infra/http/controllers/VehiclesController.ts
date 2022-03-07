@@ -1,8 +1,9 @@
-import { request, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import Http from '../../../../../shared/error/Http';
 import CreateVehicleService from '../../../services/CreateVehicleService';
 import DeleteVehicleService from '../../../services/DeleteVehicleService';
 import GetAllVehicleService from '../../../services/GetVehicleAllService';
+import UpdateVehicleService from '../../../services/UpdateVehicleService';
 
 export default class VehiclesController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -29,12 +30,25 @@ export default class VehiclesController {
     const { id } = request.params;
     const http = new Http();
     const deleteVehicleService = new DeleteVehicleService();
-    const link = await deleteVehicleService.execute({
+    const vehicle = await deleteVehicleService.execute({
       id,
     });
 
-    response.statusCode = http.response(link);
+    response.statusCode = http.response(vehicle);
 
-    return response.json(link);
+    return response.json(vehicle);
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const { id, modelYear, maker, model, plate, renavan, chassi } = request.body;
+    const http = new Http();
+    const updateVehicleService = new UpdateVehicleService();
+    const vehicle = await updateVehicleService.execute({
+      id, modelYear, maker, model, plate, renavan, chassi
+    });
+
+    response.statusCode = http.response(vehicle);
+    console.log(vehicle)
+    return response.status(response.statusCode).json(vehicle);
   }
 }
