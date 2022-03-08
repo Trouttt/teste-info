@@ -49,7 +49,7 @@ class UpdateVehicleService {
 
       if (modelYear.length !== 4) {
         throw new AppError(
-          'Campo "ano do modelo" deve ter 4 caractéres!!!',
+          'Campo "ano do modelo" deve ter 4 caracteres!!!',
           400,
         );
       }
@@ -57,27 +57,27 @@ class UpdateVehicleService {
       if (maker.length < 1) {
         console.log("hm")
         throw new AppError(
-          'Campo "fabricante" deve ter pelo menos 1 caractér!!!',
+          'Campo "fabricante" deve ter pelo menos 1 carácter!!!',
           400,
         );
       }
       if (model.length < 1) {
         throw new AppError(
-          'Campo "modelo" deve ter pelo menos 1 caractér!!!',
+          'Campo "modelo" deve ter pelo menos 1 carácter!!!',
           400,
         );
       }
       if (plate.length < 7) {
         throw new AppError(
-          'Campo "placa" deve ter no mínimo 7 e no máximo 8 caractéres!!!',
+          'Campo "placa" deve ter no mínimo 7 e no máximo 8 caracteres!!!',
           400,
         );
       }
       if (renavan.length !== 11) {
-        throw new AppError('Campo "renavam" deve ter 11 caractéres!!!', 400);
+        throw new AppError('Campo "renavam" deve ter 11 caracteres!!!', 400);
       }
       if (chassi.length !== 17) {
-        throw new AppError('Campo "chassi" deve ter 17 caractéres!!!', 400);
+        throw new AppError('Campo "chassi" deve ter 17 caracteres!!!', 400);
       }
       console.log("dokpsa");
 
