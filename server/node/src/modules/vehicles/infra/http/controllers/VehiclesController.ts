@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Http from '../../../../../shared/error/Http';
 import CreateVehicleService from '../../../services/CreateVehicleService';
 import DeleteVehicleService from '../../../services/DeleteVehicleService';
-import GetAllVehicleService from '../../../services/GetVehicleAllService';
+import GetAllVehicleService from '../../../services/GetAllVehicleService';
 import GetVehicleByIdService from '../../../services/GetVehicleService';
 import UpdateVehicleService from '../../../services/UpdateVehicleService';
 
@@ -43,7 +43,7 @@ export default class VehiclesController {
     const { id } = request.params;
     const http = new Http();
     const getVehicleByIdService = new GetVehicleByIdService();
-    const vehicle = await getVehicleByIdService.execute(id);
+    const vehicle = await getVehicleByIdService.execute({ id });
 
     response.statusCode = http.response(vehicle);
 

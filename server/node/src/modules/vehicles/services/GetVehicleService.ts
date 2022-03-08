@@ -5,16 +5,20 @@ import AppError from '../../../shared/error/AppError';
 
 import Vehicle from '../infra/typeorm/entities/Vehicle';
 
+interface IRequest {
+  id: string
+}
 
 class GetVehicleByIdService {
-  public async execute(id: string): Promise<Vehicle | any> {
+  public async execute({ id }: IRequest): Promise<Vehicle | any> {
     try {
       const urlsRepository = await getRepository(Vehicle);
       const uuidIsValid = validate(id)
 
       if (!uuidIsValid) {
-        throw new AppError('Id inválido!!!', 400);
+        throw new AppError('UUID inválido!!!', 400);
       }
+
       const vehicle = await urlsRepository.findOne(id);
       return vehicle;
     } catch (err: any) {
