@@ -21,9 +21,9 @@ https://docs.docker.com/get-docker/
 # yarn start
 
 
-##Endpoints:
-#GET   /vehicles/       //retorna todos os veículos
-#GET   /vehicles/:id    //retorna apenas um veículos
-#POST  /vehicles        //registra um veículo
-#UPDATE /vehicles       //atualiza um veículo
-#DELETE /vehicles/:id   //remove um veículo
+## Endpoints:
+# GET   /vehicles/       //retorna todos os veículos
+# GET   /vehicles/:id    //retorna apenas um veículos
+# POST  /vehicles        //registra um veículo
+# UPDATE /vehicles       //atualiza um veículo
+# DELETE /vehicles/:id   //remove um veículo
