@@ -87,7 +87,7 @@ describe('Vehicle Update Service', () => {
 
     assert.deepEqual(
       httpResponse,
-      new AppError('Campo "ano do modelo" deve ter 4 carateres!!!', 400),
+      new AppError('Campo "ano do modelo" deve ter 4 caracteres!!!', 400),
     );
   });
 
@@ -145,7 +145,7 @@ describe('Vehicle Update Service', () => {
 
     assert.deepEqual(
       httpResponse,
-      new AppError('Campo "placa" deve ter no mínimo 7 e no máximo 8 carateres!!!', 400),
+      new AppError('Campo "placa" deve ter no mínimo 7 e no máximo 8 caracteres!!!', 400),
     );
   });
 
@@ -164,7 +164,7 @@ describe('Vehicle Update Service', () => {
 
     assert.deepEqual(
       httpResponse,
-      new AppError('Campo "renavam" deve ter 11 carateres!!!', 400),
+      new AppError('Campo "renavam" deve ter 11 caracteres!!!', 400),
     );
   });
   it('Should return error if the chassi is different than 17', async () => {
@@ -182,7 +182,7 @@ describe('Vehicle Update Service', () => {
 
     assert.deepEqual(
       httpResponse,
-      new AppError('Campo "chassi" deve ter 17 carateres!!!', 400),
+      new AppError('Campo "chassi" deve ter 17 caracteres!!!', 400),
     );
   });
 });
