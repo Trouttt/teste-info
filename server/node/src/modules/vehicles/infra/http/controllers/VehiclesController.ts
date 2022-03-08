@@ -3,6 +3,7 @@ import Http from '../../../../../shared/error/Http';
 import CreateVehicleService from '../../../services/CreateVehicleService';
 import DeleteVehicleService from '../../../services/DeleteVehicleService';
 import GetAllVehicleService from '../../../services/GetVehicleAllService';
+import GetVehicleByIdService from '../../../services/GetVehicleService';
 import UpdateVehicleService from '../../../services/UpdateVehicleService';
 
 export default class VehiclesController {
@@ -38,7 +39,16 @@ export default class VehiclesController {
 
     return response.json(vehicle);
   }
+  public async getById(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+    const http = new Http();
+    const getVehicleByIdService = new GetVehicleByIdService();
+    const vehicle = await getVehicleByIdService.execute(id);
 
+    response.statusCode = http.response(vehicle);
+
+    return response.json(vehicle);
+  }
   public async update(request: Request, response: Response): Promise<Response> {
     const { id, modelYear, maker, model, plate, renavan, chassi } = request.body;
     const http = new Http();
