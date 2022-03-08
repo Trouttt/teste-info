@@ -13,10 +13,10 @@ https://docs.docker.com/get-docker/
 # yarn
 # yarn dev
 
-## Para rodar os testes no back-end digite yarn test
+## Para rodar os testes no back-end na porta 3333 digite yarn test
 # yarn test
 
-## Para rodar o front-end, entre no client e execute o yarn e o yarn start
+## Para rodar o front-end na porta 4200, entre no client e execute o yarn e o yarn start
 # yarn
 # yarn start
 
